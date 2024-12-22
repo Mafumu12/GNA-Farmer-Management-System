@@ -3,28 +3,54 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\ModuleService;
 
 class InstallModuleCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'app:install-module-command';
+    protected $signature = 'modules:install-new';
 
     /**
      * The console command description.
-     *
-     * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Install new modules added to the Modules directory.';
+
+    protected $moduleService;
+
+    /**
+     * Constructor to inject the ModuleService.
+     */
+    public function __construct(ModuleService $moduleService)
+    {
+        parent::__construct();
+        $this->moduleService = $moduleService;
+    }
 
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle()  
     {
-        //
+        $newModules = $this->moduleService->getNewModules();
+
+        if (empty($newModules)) {
+            $this->info("No new modules found to install.");
+            return;
+        }
+
+        foreach ($newModules as $moduleName) {
+            if ($this->moduleService->validateModuleStructure($moduleName)) {
+                $this->info("Installing module: {$moduleName}");
+                try {
+                    $this->moduleService->registerAndInstallModule($moduleName);
+                    $this->info("Module '{$moduleName}' installed successfully.");
+                } catch (\Exception $e) {
+                    $this->error("Failed to install module '{$moduleName}': " . $e->getMessage());
+                }
+            } else {
+                $this->warn("Invalid module structure for: {$moduleName}. Skipping...");
+            }
+        }
+
+        $this->info("Module installation process completed.");
     }
 }
