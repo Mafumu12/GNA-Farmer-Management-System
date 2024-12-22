@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
                 if (file_exists($serviceProvider)) {
                     $this->app->register("Modules\\" . $module->getName() . "\\Providers\\" . $module->getName() . "ServiceProvider");
                 }
+                $migrationPath = $module->getPath() . '/Database/Migrations';
+                if (is_dir($migrationPath)) {
+                    $this->loadMigrationsFrom($migrationPath);
+                }
             }
         }
     }
