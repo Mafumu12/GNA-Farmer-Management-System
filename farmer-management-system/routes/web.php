@@ -14,6 +14,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/admin', function () {
+    return Inertia::render('FarmerManagementSystem/Dashboard/Overview');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
