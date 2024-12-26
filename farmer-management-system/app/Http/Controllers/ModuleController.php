@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ZipService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 
 class ModuleController extends Controller
@@ -23,49 +24,48 @@ class ModuleController extends Controller
      * Handle module upload and installation.
      */
     public function upload(Request $request)
-{
-    // Validate the uploaded file
-    $request->validate([
-        'module' => 'required|file|mimes:zip',
-    ]);
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'module' => 'required|file|mimes:zip',
+        ]);
 
-    $file = $request->file('module');
-    //Log::info('Uploaded file', ['file' => $file]);
+        $file = $request->file('module');
+        $moduleName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
-    // Extract module name from file
-    $moduleName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-    //Log::info('Module name', ['$moduleName' => $moduleName]);
+        // Define the extraction path
+        $extractPath = base_path('Modules/' );
 
-    // Define the extraction path
-    $extractPath = base_path('Modules');
-    //Log::info('Extraction path', ['extractPath' => $extractPath]);
+        // Ensure the module doesn't already exist
+        /*if (File::exists($extractPath)) {
+            return response()->json(['error' => 'Module already exists.'], 400);
+        }*/
 
-    // Use the ZipService to extract the ZIP file
-    if (!$this->zipService->extractZip($file->getPathname(), $extractPath)) {
-        Log::error('Failed to extract ZIP file', ['zipPath' => $file->getPathname(), 'extractPath' => $extractPath]);
-        return response()->json(['error' => 'Failed to extract module zip file.'], 500);
+        // Extract the ZIP file
+        if (!$this->zipService->extractZip($file->getPathname(), $extractPath)) {
+            Log::error('Failed to extract ZIP file', ['zipPath' => $file->getPathname(), 'extractPath' => $extractPath]);
+            return response()->json(['error' => 'Failed to extract module zip file.'], 500);
+        }
+
+        // After extracting, check if the structure is correct and run the command
+        $this->createModuleFiles($moduleName);
+
+        return response()->json(['message' => 'Module installed successfully.'], 200);
     }
 
-    // Build the path to the extracted module.json file
-    $moduleJsonPath = $extractPath . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'module.json';
-    //Log::info('module.json path', ['moduleJsonPath' => $moduleJsonPath]);
+    /**
+     * Create the module files if the structure is correct.
+     */
+    protected function createModuleFiles($moduleName)
+    {
+        $modulePath = base_path('Modules/' . $moduleName);
 
-    // Check if the module.json file exists
-    if (!file_exists($moduleJsonPath)) {
-        Log::error('Invalid module structure. module.json not found', ['moduleJsonPath' => $moduleJsonPath]);
-        return response()->json(['error' => 'Invalid module structure.'], 400);
+        // Check if the necessary directories exist
+        if (!File::exists($modulePath . '/Controllers') || !File::exists($modulePath . '/Routes')) {
+            Log::error('Invalid module structure for ' . $moduleName);
+            return response()->json(['error' => 'Module structure is invalid.'], 500);
+        }
+
+         
     }
-
-    // Install the module
-    try {
-        Artisan::call('modules:install-new', ['name' => $moduleName]);  // Pass the 'name' argument
-        //Log::info('Module installed successfully', ['moduleName' => $moduleName]);
-    } catch (\Exception $e) {
-        Log::error('Failed to install module', ['moduleName' => $moduleName, 'error' => $e->getMessage()]);
-        return response()->json(['error' => 'Failed to install module.'], 500);
-    }
-
-    return response()->json(['message' => 'Module installed successfully.'], 200);
-}
-
 }
