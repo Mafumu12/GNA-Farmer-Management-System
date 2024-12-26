@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CreateModuleController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
 //modules
 
 Route::post('/upload-zip', [ModuleController::class, 'upload'])->name('module.upload');
+Route::post('/create-Module', [CreateModuleController::class, 'create'])->name('module.create');
 Route::get('/admin', function () {
     return Inertia::render('FarmerManagementSystem/Dashboard/Overview');
 });
