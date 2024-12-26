@@ -100,6 +100,10 @@ const toggleDropdown = (dropdown) => {
                                     class="flex items-center w-full p-2 text-white rounded-lg pl-11   hover:text-[#D3C11D] font-thin">Install</a>
                             </li>
                             <li>
+                                <Link href="/module-management"
+                                    class="flex items-center w-full p-2 text-white rounded-lg pl-11   hover:text-[#D3C11D] font-thin">Module Mangement</Link>
+                            </li>
+                            <li>
                                 <Link href="/upload"
                                     class="flex items-center w-full p-2 text-white rounded-lg pl-11 hover:text-[#D3C11D]   font-thin">Upload</Link>
                             </li>

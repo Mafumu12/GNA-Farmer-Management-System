@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Module;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,18 +28,14 @@ class ModuleServiceProvider extends ServiceProvider
             return;
         }
 
-        $modules = scandir($modulePath);
+        $modules = Module::where('is_active', true)->get(); // Fetch only active modules
 
         foreach ($modules as $module) {
-            // Skip "." and ".." directory references
-            if ($module === '.' || $module === '..') {
-                continue;
-            }
+            $moduleDir = $modulePath . '/' . $module->name;
 
-            $moduleDir = $modulePath . '/' . $module;
-
+            // Skip if module directory doesn't exist
             if (!is_dir($moduleDir)) {
-                Log::warning("Skipping non-directory entry: $module");
+                Log::warning("Skipping non-existing module: $module->name");
                 continue;
             }
 
@@ -46,21 +43,21 @@ class ModuleServiceProvider extends ServiceProvider
             $routePath = $moduleDir . '/Routes/web.php';
             if (file_exists($routePath)) {
                 $this->loadRoutesFrom($routePath);
-                Log::info("Routes loaded for module: $module");
+                Log::info("Routes loaded for module: $module->name");
             }
 
             // Load module views
             $viewPath = $moduleDir . '/Views';
             if (is_dir($viewPath)) {
-                $this->loadViewsFrom($viewPath, $module);
-                Log::info("Views loaded for module: $module");
+                $this->loadViewsFrom($viewPath, $module->name);
+                Log::info("Views loaded for module: $module->name");
             }
 
             // Load module migrations
             $migrationPath = $moduleDir . '/Migrations';
             if (is_dir($migrationPath)) {
                 $this->loadMigrationsFrom($migrationPath);
-                Log::info("Migrations loaded for module: $module");
+                Log::info("Migrations loaded for module: $module->name");
             }
         }
     }

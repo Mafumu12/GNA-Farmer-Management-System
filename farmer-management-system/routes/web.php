@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CreateModuleController;
+use App\Http\Controllers\MonduleStateController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -34,10 +35,15 @@ Route::post('/create-Module', [CreateModuleController::class, 'create'])->name('
 Route::get('/admin', function () {
     return Inertia::render('FarmerManagementSystem/Dashboard/Overview');
 });
+ 
 
 Route::get('/upload', function () {
     return Inertia::render('FarmerManagementSystem/Upload/Upload'); // Adjust path as per your directory
 })->name('upload');
+Route::post('/module/{moduleName}/toggle', [MonduleStateController::class, 'toggleActivation']);
+Route::get('/module-management', [MonduleStateController::class, 'getModules']);
+
+
 
 
 require __DIR__.'/auth.php';

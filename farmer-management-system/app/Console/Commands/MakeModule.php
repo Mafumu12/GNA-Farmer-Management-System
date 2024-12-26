@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Module;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
@@ -59,5 +60,10 @@ class MakeModule extends Command
         File::put("{$modulePath}/Views/index.blade.php", $viewTemplate);
 
         $this->info("Module '{$name}' created successfully!");
+
+        Module::create([
+            'name' => $name,
+            'active' => true, // Set the module as active by default
+        ]);
     }
 }

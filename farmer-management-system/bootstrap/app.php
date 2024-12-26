@@ -17,7 +17,15 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         //
+
+        $middleware->alias([
+
+            'ModuleStatus' => \App\Http\Middleware\CheckModuleActive::class,
+        ]);
     })
+
+   
+
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
