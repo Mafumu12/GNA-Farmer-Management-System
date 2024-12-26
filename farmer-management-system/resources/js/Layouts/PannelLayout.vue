@@ -6,7 +6,7 @@ import SideBar from '@/Components/FarmerManagementSystem/SideBar/SideBar.vue';
 
 <template>
     <!-- ===== Page Wrapper Start ===== -->
-    <div class="">
+    <div class="bg-gray-100 flex justify-center h-screen ">
       <!-- ===== Sidebar Start ===== -->
       <SideBar />
       <!-- ===== Sidebar End ===== -->
@@ -14,7 +14,7 @@ import SideBar from '@/Components/FarmerManagementSystem/SideBar/SideBar.vue';
       <!-- ===== Content Area Start ===== -->
        
         <main>
-          <div class="mx-auto max-w-screen-2xl  p-4 md:p-6 2xl:p-10">
+          <div class="mx-auto w-screen md:w-full   p-4  ">
             <slot></slot>
           </div>
         </main>

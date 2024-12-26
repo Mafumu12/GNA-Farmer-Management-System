@@ -30,18 +30,15 @@ Route::middleware('auth')->group(function () {
 
 //modules
 
-Route::post('/upload-zip', [ModuleController::class, 'upload'])->name('module.upload');
-Route::post('/create-Module', [CreateModuleController::class, 'create'])->name('module.create');
 Route::get('/admin', function () {
     return Inertia::render('FarmerManagementSystem/Dashboard/Overview');
 });
- 
 
-Route::get('/upload', function () {
-    return Inertia::render('FarmerManagementSystem/Upload/Upload'); // Adjust path as per your directory
-})->name('upload');
-Route::post('/module/{moduleName}/toggle', [MonduleStateController::class, 'toggleActivation']);
 Route::get('/module-management', [MonduleStateController::class, 'getModules']);
+
+Route::post('/upload-zip', [ModuleController::class, 'upload'])->name('module.upload');
+Route::post('/create-Module', [CreateModuleController::class, 'create'])->name('module.create');
+Route::post('/module/{moduleName}/toggle', [MonduleStateController::class, 'toggleActivation']);
 Route::delete('/module/{moduleName}', [MonduleStateController::class, 'deleteModule']);
 
 

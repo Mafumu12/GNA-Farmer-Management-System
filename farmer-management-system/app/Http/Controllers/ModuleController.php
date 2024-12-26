@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Module;
 use App\Services\ZipService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -65,6 +66,12 @@ class ModuleController extends Controller
             Log::error('Invalid module structure for ' . $moduleName);
             return response()->json(['error' => 'Module structure is invalid.'], 500);
         }
+
+        
+        Module::create([
+            'name' => $moduleName,
+            'active' => true, // Set the module as active by default
+        ]);
 
          
     }
