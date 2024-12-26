@@ -1,19 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\LoanManagement\Http\Controllers\LoanManagementController;
+use Modules\LoanManagement\Controllers\LoanManagementController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::group([], function () {
-    Route::resource('loanmanagement', LoanManagementController::class)->names('loanmanagement');
-});
+Route::get('/LoanManagement', [LoanManagementController::class, 'index']);

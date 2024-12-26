@@ -1,7 +1,7 @@
 <script setup>
-import { FaArrowDown, FaArrowLeft, FaChartPie, FaChevronDown, FaCubes, FaSeedling } from 'vue3-icons/fa';
+import {  FaArrowLeft, FaChartPie, FaChevronDown, FaCubes, FaSeedling } from 'vue3-icons/fa';
 import { ref } from 'vue';
-
+import { Link } from '@inertiajs/vue3';
 
 const isDashboardDropdownOpen = ref(false);
 const isModulesDropdownOpen = ref(false);
@@ -21,8 +21,7 @@ const toggleDropdown = (dropdown) => {
 
 <template>
 
-    <nav
-        class="bg-white   fixed w-full z-20 top-0 start-0 border-b border-gray-200  ">
+    <nav class="bg-white   fixed w-full z-20 top-0 start-0 border-b border-gray-200  ">
         <button @click="toggleMobileNav" type="button"
             class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-[#EBE9EB] rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             aria-controls="navbar-hamburger" :aria-expanded="isMobileNavOpen.toString()">
@@ -75,7 +74,7 @@ const toggleDropdown = (dropdown) => {
                                 <FaChevronDown />
                             </span>
                         </button>
-                        <ul  v-if="isDashboardDropdownOpen" class="py-2 space-y-2">
+                        <ul v-if="isDashboardDropdownOpen" class="py-2 space-y-2">
                             <li>
                                 <a href="#"
                                     class="flex items-center w-full p-2 text-white rounded-lg pl-11 hover:text-[#D3C11D] font-thin">Overview</a>
@@ -95,14 +94,14 @@ const toggleDropdown = (dropdown) => {
                                 <FaChevronDown />
                             </span>
                         </button>
-                        <ul  v-if="isModulesDropdownOpen" class="py-2 space-y-2">
+                        <ul v-if="isModulesDropdownOpen" class="py-2 space-y-2">
                             <li>
                                 <a href="#"
                                     class="flex items-center w-full p-2 text-white rounded-lg pl-11   hover:text-[#D3C11D] font-thin">Install</a>
                             </li>
                             <li>
-                                <a href="#"
-                                    class="flex items-center w-full p-2 text-white rounded-lg pl-11 hover:text-[#D3C11D]   font-thin">Upload</a>
+                                <Link href="/upload"
+                                    class="flex items-center w-full p-2 text-white rounded-lg pl-11 hover:text-[#D3C11D]   font-thin">Upload</Link>
                             </li>
                         </ul>
                     </li>

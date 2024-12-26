@@ -14,9 +14,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::get('/admin', function () {
-    return Inertia::render('FarmerManagementSystem/Dashboard/Overview');
-});
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -28,7 +26,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::post('/upload', [ModuleController::class, 'upload'])->name('module.upload');
+//modules
+
+Route::post('/upload-zip', [ModuleController::class, 'upload'])->name('module.upload');
+Route::get('/admin', function () {
+    return Inertia::render('FarmerManagementSystem/Dashboard/Overview');
+});
+
+Route::get('/upload', function () {
+    return Inertia::render('FarmerManagementSystem/Upload/Upload'); // Adjust path as per your directory
+})->name('upload');
 
 
 require __DIR__.'/auth.php';

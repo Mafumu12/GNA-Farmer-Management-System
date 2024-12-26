@@ -1,11 +1,12 @@
 <script setup >
  
 import SideBar from '@/Components/FarmerManagementSystem/SideBar/SideBar.vue';
+
 </script>
 
 <template>
     <!-- ===== Page Wrapper Start ===== -->
-    <div class="flex h-screen bg-[#F4F4F4] overflow-hidden">
+    <div class="">
       <!-- ===== Sidebar Start ===== -->
       <SideBar />
       <!-- ===== Sidebar End ===== -->
