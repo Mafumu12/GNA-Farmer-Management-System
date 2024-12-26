@@ -76,8 +76,8 @@ const toggleDropdown = (dropdown) => {
                         </button>
                         <ul v-if="isDashboardDropdownOpen" class="py-2 space-y-2">
                             <li>
-                                <a href="#"
-                                    class="flex items-center w-full p-2 text-white rounded-lg pl-11 hover:text-[#D3C11D] font-thin">Overview</a>
+                                <Link href="/admin-dashboard"
+                                    class="flex items-center w-full p-2 text-white rounded-lg pl-11 hover:text-[#D3C11D] font-thin">Overview</Link>
                             </li>
                         </ul>
                     </li>

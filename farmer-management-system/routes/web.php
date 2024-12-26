@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\FarmersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CreateModuleController;
 use App\Http\Controllers\MonduleStateController;
@@ -28,14 +29,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+//Dashboard
+Route::get('/admin-dashboard',  [FarmersController::class, 'index']);
+Route::post('/register-farmer', [FarmersController::class, 'store'])->name('farmer.create');
+Route::put('/farmers/{id}', [FarmersController::class, 'update'])->name('farmers.update');
+
+// Delete a farmer
+Route::delete('/farmers/{id}', [FarmersController::class, 'destroy'])->name('farmers.destroy');
 //modules
-
-Route::get('/admin', function () {
-    return Inertia::render('FarmerManagementSystem/Dashboard/Overview');
-});
-
 Route::get('/module-management', [MonduleStateController::class, 'getModules']);
-
 Route::post('/upload-zip', [ModuleController::class, 'upload'])->name('module.upload');
 Route::post('/create-Module', [CreateModuleController::class, 'create'])->name('module.create');
 Route::post('/module/{moduleName}/toggle', [MonduleStateController::class, 'toggleActivation']);
