@@ -42,6 +42,8 @@ Route::get('/upload', function () {
 })->name('upload');
 Route::post('/module/{moduleName}/toggle', [MonduleStateController::class, 'toggleActivation']);
 Route::get('/module-management', [MonduleStateController::class, 'getModules']);
+Route::delete('/module/{moduleName}', [MonduleStateController::class, 'deleteModule']);
+
 
 
 

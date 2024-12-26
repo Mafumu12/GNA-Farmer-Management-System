@@ -8,17 +8,27 @@
           <!-- Module Name -->
           <span class="text-lg font-medium">{{ module.name }}</span>
   
-          <!-- Toggle Button -->
-          <button
-            @click="toggleModule(module)"
-            :class="{
-              'bg-green-500 hover:bg-green-600': module.is_active,
-              'bg-gray-500 hover:bg-gray-600': !module.is_active,
-            }"
-            class="px-4 py-2 text-white rounded"
-          >
-            {{ module.is_active ? 'Deactivate' : 'Activate' }}
-          </button>
+          <div>
+            <!-- Toggle Button -->
+            <button
+              @click="toggleModule(module)"
+              :class="{
+                'bg-green-500 hover:bg-green-600': module.is_active,
+                'bg-gray-500 hover:bg-gray-600': !module.is_active,
+              }"
+              class="px-4 py-2 text-white rounded mr-2"
+            >
+              {{ module.is_active ? 'Deactivate' : 'Activate' }}
+            </button>
+  
+            <!-- Delete Button -->
+            <button
+              @click="deleteModule(module)"
+              class="bg-red-500 hover:bg-red-600 px-4 py-2 text-white rounded"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </div>
   
@@ -34,23 +44,18 @@
   import axios from 'axios';
   import PannelLayout from '@/Layouts/PannelLayout.vue';
   
-  // Reactive variables
   const modules = ref([]);
   const errorMessage = ref('');
   
-  // Fetch modules from the server
   const fetchModules = async () => {
     try {
       const response = await axios.get('/module-management');
       modules.value = response.data;
-
-      console.log('response' , response.data);
     } catch (error) {
       errorMessage.value = 'Failed to load modules. Please try again later.';
     }
   };
   
-  // Toggle module activation state
   const toggleModule = async (module) => {
     try {
       const response = await axios.post(`/module/${module.name}/toggle`);
@@ -61,15 +66,20 @@
     }
   };
   
-  // Fetch modules when the component is mounted
+  const deleteModule = async (module) => {
+    if (confirm(`Are you sure you want to delete the module "${module.name}"?`)) {
+      try {
+        const response = await axios.delete(`/module/${module.name}`);
+        modules.value = modules.value.filter(m => m.id !== module.id); // Remove module from the UI
+        alert(response.data.message);
+      } catch (error) {
+        alert('Failed to delete module. Please try again.');
+      }
+    }
+  };
+  
   onMounted(() => {
     fetchModules();
   });
   </script>
-  
-  <style scoped>
-  h1 {
-    color: #333;
-  }
-  </style>
   
