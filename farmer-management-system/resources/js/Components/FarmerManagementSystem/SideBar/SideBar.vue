@@ -16,6 +16,9 @@ const toggleDropdown = (dropdown) => {
     } else if (dropdown === 'modules') {
         isModulesDropdownOpen.value = !isModulesDropdownOpen.value;
     }
+    else if (dropdown === 'loanmanagement') {
+        isModulesDropdownOpen.value = !isModulesDropdownOpen.value;
+    }
 };
 </script>
 
@@ -99,6 +102,27 @@ const toggleDropdown = (dropdown) => {
                             <li>
                                 <Link href="/module-management"
                                     class="flex items-center w-full p-2 text-white rounded-lg pl-11   hover:text-[#D3C11D] font-thin">Module Mangement</Link>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li class="my-2">
+                        <button @click="toggleDropdown('loanmanagement')" type="button"
+                            class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-[#467A6E]">
+                            <span class="text-[#F4F4F4] text-[20px] md:text-[24px]">
+                                <FaCubes />
+                            </span>
+                            <span
+                                class="flex-1 ms-3 text-left rtl:text-right text-[#EBE9EB] text-[14px] md:text-[18px] whitespace-nowrap">Loan Management</span>
+                            <span class="text-[#F4F4F4] text-[12px] md:text-[16px]">
+                                <FaChevronDown />
+                            </span>
+                        </button>
+                        <ul v-if="isModulesDropdownOpen" class="py-2 space-y-2">
+                             
+                            <li>
+                                <Link href="/LoanManagement"
+                                    class="flex items-center w-full p-2 text-white rounded-lg pl-11   hover:text-[#D3C11D] font-thin">Loans</Link>
                             </li>
                             
                         </ul>
