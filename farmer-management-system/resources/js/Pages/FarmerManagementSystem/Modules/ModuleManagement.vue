@@ -10,8 +10,8 @@
 
         <!-- List of modules -->
         <Module :modules="modules" @toggle-module="toggleModule" @delete-module="deleteModule" />
-        <InstallModal v-if="showInstallModal" :isVisible="showInstallModal" @close="showInstallModal = false" @module-created="onModuleCreated"/>
-        <UploadModal v-if="showUploadModal" :isVisible="showUploadModal" @close="showUploadModal = false" />
+        <InstallModal v-if="showInstallModal" :isVisible="showInstallModal" @close="showInstallModal = false" @module-created="fetchModules"/>
+        <UploadModal v-if="showUploadModal" :isVisible="showUploadModal" @close="showUploadModal = false" @module-upload="fetchModules" />
 
         
     </PannelLayout>
@@ -63,9 +63,7 @@ const deleteModule = async (module) => {
 };
 
 
-const onModuleCreated = () => {
-  fetchModules(); // Refresh the list of modules
-};
+ 
 
 
 onMounted(() => {

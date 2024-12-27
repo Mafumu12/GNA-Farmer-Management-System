@@ -10,7 +10,7 @@
             <div class="relative bg-white rounded-lg shadow">
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                 <h3 class="text-xl font-semibold text-gray-900">Upload Module</h3>
-                <button @click="$emit('close')" type="button"
+                <button  @click="emitClose"  type="button"
                     class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center">
                     <FaTimesCircle />
                 </button>
@@ -75,7 +75,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { FaTimesCircle } from 'vue3-icons/fa';
 
- 
+const emit =defineEmits(["close", "module-upload"]);
 
 defineProps({
     isVisible: Boolean,
@@ -117,9 +117,14 @@ const uploadFile = async () => {
         // Reset after successful upload
         selectedFile.value = null;
         selectedFileName.value = '';
+        emit("module-upload");
+        emit("close");
     } catch (error) {
-        alert(error.response?.data?.error || 'An error occurred while uploading the file.');
+        console.error("Error during upload:", error);
     }
+};
+const emitClose = () => {
+  emit("close");
 };
 
 </script>

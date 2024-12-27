@@ -14,7 +14,7 @@ import SideBar from '@/Components/FarmerManagementSystem/SideBar/SideBar.vue';
       <!-- ===== Content Area Start ===== -->
        
         <main>
-          <div class="mx-auto w-screen md:w-full   p-4  ">
+          <div class="mx-auto w-screen p-4 ">
             <slot></slot>
           </div>
         </main>

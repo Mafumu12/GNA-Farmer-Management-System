@@ -1,10 +1,13 @@
 <template>
     <PannelLayout>
       <h1>Overview</h1>
-  
-      <div class="my-4">
+
+       
+        <h1>Overview</h1>
+        <div class="my-4">
         <FarmerCount :farmers="farmers" />
-      </div>
+        </div> 
+       
   
       <div class="my-4">
         <AddFarmers @register="showRegisterModal = true" />
@@ -14,7 +17,10 @@
       </div>
       <RegisterModal v-if="showRegisterModal" :isVisible="showRegisterModal" @close="showRegisterModal = false" @farmer-register="fetchFarmers" />
       <EditFarmers v-if="showEditModal" :isVisible="showEditModal" :farmer="selectedFarmer" @close="closeEditModal" @farmer-update = "fetchFarmers"/>
-    </PannelLayout>
+
+       
+  
+          </PannelLayout>
   </template>
   
   <script setup>
