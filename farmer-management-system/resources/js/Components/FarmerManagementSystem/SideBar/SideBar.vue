@@ -1,5 +1,5 @@
 <script setup>
-import { FaArrowLeft, FaChartPie, FaChevronDown, FaCubes, FaSeedling } from 'vue3-icons/fa';
+import { FaArrowLeft, FaChartPie, FaChevronDown, FaCubes, FaPiggyBank, FaSeedling } from 'vue3-icons/fa';
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
@@ -83,7 +83,7 @@ const toggleDropdown = (dropdown) => {
                             </button>
                             <ul v-if="isDashboardDropdownOpen" class="py-2 space-y-2">
                                 <li>
-                                    <Link href="/admin-dashboard"
+                                    <Link href="/"
                                         class="flex items-center w-full p-2 text-white rounded-lg pl-11 hover:text-[#D3C11D] font-thin">
                                     Overview</Link>
                                 </li>
@@ -116,7 +116,7 @@ const toggleDropdown = (dropdown) => {
                             <button @click="toggleDropdown('loanmanagement')" type="button"
                                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-[#467A6E]">
                                 <span class="text-[#F4F4F4] text-[20px] md:text-[24px]">
-                                    <FaCubes />
+                                    <FaPiggyBank />
                                 </span>
                                 <span
                                     class="flex-1 ms-3 text-left rtl:text-right text-[#EBE9EB] text-[14px] md:text-[18px] whitespace-nowrap">Loan

@@ -9,7 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CreateModuleController;
 use App\Http\Controllers\MonduleStateController;
 
-Route::get('/', function () {
+Route::get('/##', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 
 //Dashboard
-Route::get('/admin-dashboard',  [FarmersController::class, 'index']);
+Route::get('/',  [FarmersController::class, 'index']);
 Route::post('/register-farmer', [FarmersController::class, 'store'])->name('farmer.create');
 Route::put('/farmers/{id}', [FarmersController::class, 'update'])->name('farmers.update');
 

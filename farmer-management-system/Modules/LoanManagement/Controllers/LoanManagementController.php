@@ -51,6 +51,7 @@ class LoanManagementController extends Controller
             'farmers' => Farmer::all(),
         ]);
     }
+   
 
     public function approveLoan($id)
     {
