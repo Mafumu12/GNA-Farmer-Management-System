@@ -37,12 +37,7 @@ class ModuleController extends Controller
         // Define the extraction path
         $extractPath = base_path('Modules/' );
 
-        // Ensure the module doesn't already exist
-        /*if (File::exists($extractPath)) {
-            return response()->json(['error' => 'Module already exists.'], 400);
-        }*/
-
-        // Extract the ZIP file
+         
         if (!$this->zipService->extractZip($file->getPathname(), $extractPath)) {
             Log::error('Failed to extract ZIP file', ['zipPath' => $file->getPathname(), 'extractPath' => $extractPath]);
             return response()->json(['error' => 'Failed to extract module zip file.'], 500);
