@@ -13,7 +13,7 @@
         <RegisteredFarmers :farmers="farmers" @edit="openEditModal" @delete-farmer="deleteFarmer" />
       </div>
       <RegisterModal v-if="showRegisterModal" :isVisible="showRegisterModal" @close="showRegisterModal = false" @farmer-register="fetchFarmers" />
-      <EditFarmers v-if="showEditModal" :isVisible="showEditModal" :farmer="selectedFarmer" @close="closeEditModal" />
+      <EditFarmers v-if="showEditModal" :isVisible="showEditModal" :farmer="selectedFarmer" @close="closeEditModal" @farmer-update = "fetchFarmers"/>
     </PannelLayout>
   </template>
   
