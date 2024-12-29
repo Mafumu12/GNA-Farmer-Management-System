@@ -2,10 +2,10 @@
 
 namespace Modules\LoanManagement\Controllers;
 
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Farmer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 use Modules\LoanManagement\Models\Loans;
 
 class LoanManagementController extends Controller
@@ -51,7 +51,6 @@ class LoanManagementController extends Controller
             'farmers' => Farmer::all(),
         ]);
     }
-   
 
     public function approveLoan($id)
     {
@@ -85,4 +84,11 @@ class LoanManagementController extends Controller
 
         return response()->json(['message' => 'Loan marked as repaid successfully']);
     }
+
+    public function show($id)
+    {
+        $loan = Loans::findOrFail($id);
+        return response()->json($loan);
+    }
+
 }

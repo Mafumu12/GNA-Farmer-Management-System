@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Module;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -21,6 +23,10 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        if (app()->runningInConsole()) {
+            return;
+        }
         $modulePath = base_path('Modules');
 
         if (!is_dir($modulePath)) {
@@ -28,7 +34,13 @@ class ModuleServiceProvider extends ServiceProvider
             return;
         }
 
-        $modules = Module::where('is_active', true)->get(); // Fetch only active modules
+        // Check if the 'modules' table exists
+        if (!Schema::hasTable('modules')) {
+            Log::warning('Modules table does not exist.');
+            return;
+        }
+
+        $modules = Module::where('is_active', 1)->get(); // Fetch only active modules
 
         foreach ($modules as $module) {
             $moduleDir = $modulePath . '/' . $module->name;
@@ -58,6 +70,12 @@ class ModuleServiceProvider extends ServiceProvider
             if (is_dir($migrationPath)) {
                 $this->loadMigrationsFrom($migrationPath);
                 Log::info("Migrations loaded for module: $module->name");
+
+                Artisan::call('migrate', [
+                    '--path' => str_replace(base_path() . '/', '', $migrationPath),
+                    '--force' => true,
+                ]);
+                Log::info("Migrations executed for module: $module->name");
             }
         }
     }
