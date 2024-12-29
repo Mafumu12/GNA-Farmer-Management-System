@@ -1,19 +1,32 @@
 <template>
     <PannelLayout>
-        <h1 class="text-2xl font-bold my-16">Module Management</h1>
 
-        <div class=" ">
-            <ModuleNav @install="showInstallModal = true" @upload="showUploadModal = true" />
+        <h1 class="text-2xl font-bold my-6 text-center"> Create Modules</h1>
+
+        <div class="lg:flex lg:items-center lg:justify-center lg:gap-4">
+
+            <div class=" mb-4 mt-10 lg:mt-4 lg:mb-4 ">
+                <ModuleNav @install="showInstallModal = true" />
+
+            </div>
+            <div class="my-4 ">
+                <UploadMod @upload="showUploadModal = true" />
+
+            </div>
+
         </div>
 
-        <h1 class="text-2xl font-bold my-8">Modules</h1>
+
+        <h1 class="text-2xl font-bold my-6 text-center">Modules</h1>
 
         <!-- List of modules -->
         <Module :modules="modules" @toggle-module="toggleModule" @delete-module="deleteModule" />
-        <InstallModal v-if="showInstallModal" :isVisible="showInstallModal" @close="showInstallModal = false" @module-created="fetchModules"/>
-        <UploadModal v-if="showUploadModal" :isVisible="showUploadModal" @close="showUploadModal = false" @module-upload="fetchModules" />
+        <InstallModal v-if="showInstallModal" :isVisible="showInstallModal" @close="showInstallModal = false"
+            @module-created="fetchModules" />
+        <UploadModal v-if="showUploadModal" :isVisible="showUploadModal" @close="showUploadModal = false"
+            @module-upload="fetchModules" />
 
-        
+
     </PannelLayout>
 </template>
 
@@ -25,6 +38,7 @@ import ModuleNav from '@/Components/FarmerManagementSystem/ModuleNav/ModuleNav.v
 import Module from '@/Components/FarmerManagementSystem/Modules/Module.vue';
 import InstallModal from '@/Components/FarmerManagementSystem/Install/InstallModal.vue';
 import UploadModal from '@/Components/FarmerManagementSystem/Upload/UploadModal.vue';
+import UploadMod from '@/Components/FarmerManagementSystem/ModuleNav/UploadMod.vue';
 
 const modules = ref([]);
 const errorMessage = ref('');
@@ -63,7 +77,7 @@ const deleteModule = async (module) => {
 };
 
 
- 
+
 
 
 onMounted(() => {

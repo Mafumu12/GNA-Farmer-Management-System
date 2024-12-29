@@ -1,12 +1,15 @@
 <template>
-    <div v-for="module in modules" :key="module.id" class="shadow-md bg-white py-4 px-4 my-4 mx-auto">
+    <div v-for="module in modules" :key="module.id" class="shadow-md bg-white py-4 px-4 my-4 mx-auto lg:w-[550px] lg:h-[150px]">
       
-      <div class=" my-4">
-        <span class="text-medium font-bold">{{ module.name }}</span>
+       <div class="my-2 text-center">
 
-      </div>
+        <span class="text-medium  font-bold">{{ module.name }}</span>
+       </div>
+        
+
+     
        
-      <div class="flex justify-between items-center">
+      <div class="flex justify-center gap-2  items-center">
         <div class="flex justify-center gap-2">
           <!-- Toggle Button -->
           <button

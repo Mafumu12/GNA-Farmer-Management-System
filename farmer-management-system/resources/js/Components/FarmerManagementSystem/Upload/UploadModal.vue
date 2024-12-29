@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <button class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                    <button class="px-4 py-2 text-white bg-[#17594A] rounded  "
                         :class="{ 'opacity-50 cursor-not-allowed': !selectedFile }" @click="uploadFile"
                         :disabled="!selectedFile">
                         Upload File

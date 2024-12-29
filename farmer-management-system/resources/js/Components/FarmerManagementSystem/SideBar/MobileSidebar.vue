@@ -1,13 +1,15 @@
 <script setup>
-import {   FaChartPie, FaChevronDown, FaCubes, FaPiggyBank, FaSeedling } from 'vue3-icons/fa';
+import { FaArrowLeft, FaChartPie, FaChevronDown, FaCubes, FaPiggyBank, FaSeedling } from 'vue3-icons/fa';
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
 const isDashboardDropdownOpen = ref(false);
 const isModulesDropdownOpen = ref(false);
 const isLoanDropdownOpen = ref(false);
- 
- 
+const isMobileNavOpen = ref(false);
+const toggleMobileNav = () => {
+    isMobileNavOpen.value = !isMobileNavOpen.value;
+};
 
 const toggleDropdown = (dropdown) => {
     if (dropdown === 'dashboard') {
@@ -23,12 +25,27 @@ const toggleDropdown = (dropdown) => {
 
 <template>
 
-    
+     
 
-       
+        <nav class="bg-white   fixed w-full z-20 top-0 start-0 border-b border-gray-200 md:hidden ">
+        <button @click="toggleMobileNav" type="button"
+            class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-[#EBE9EB] rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            aria-controls="navbar-hamburger" :aria-expanded="isMobileNavOpen.toString()">
+
+            <svg v-if="!isMobileNavOpen" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+
+
+        </button>
+
+    </nav>
+
         <div
-            class="md:bg-[#17594A] md:h-screen  hidden  md:w-[64] md:block md:fixed md:top-0 md:bottom-0 md:z-10 md:pt-[68px]  "
-            >
+            class="fixed my-8 bg-[#17594A]  h-screen w-full z-10 md:hidden  transition-all duration-500 ease-in-out"
+            :class="{ 'md:w-64': isMobileNavOpen, '-translate-x-full': !isMobileNavOpen }">
             <div class="flex items-center justify-between gap-1 px-6 py-5.5 lg:py-6.5">
                 <Link href="/">
                     <div class="flex items-center gap-2">
@@ -38,7 +55,11 @@ const toggleDropdown = (dropdown) => {
                         <span class="text-[#EBE9EB] text-[32px] font-medium">Agro</span>
                     </div>
                 </Link>
-               
+                <button @click="toggleMobileNav" type="button" class="lg:hidden">
+                    <span class=" text-[#F4F4F4] font-light">
+                        <FaArrowLeft />
+                    </span>
+                </button>
             </div>
 
             <div class="no-scrollbar flex flex-col overflow-y-auto">
@@ -119,7 +140,6 @@ const toggleDropdown = (dropdown) => {
             </div>
         </div>
 
- 
-
+    
 
 </template>

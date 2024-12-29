@@ -1,11 +1,20 @@
 <template>
     <PannelLayout>
-      <h1>Loan Management</h1>
+  
+
+      <div class=" lg:flex lg:items-center  lg:justify-center lg:gap-4">
+        <div class="my-4">
+        <LoanCount  :loans="loans" />
+      </div>
       <div class="my-4">
         <AddLoan @disburse="showDisburseModal = true" />
       </div>
+
+
+      </div> 
+    
   
-      <div class="my-4">
+      <div class="my-4 lg:w-[1110px] lg:mx-auto">
         <ManageLoans
           :loans="loans"
           @approve="approveLoan"
@@ -25,12 +34,15 @@
   </template>
   
   <script setup>
+
+   
   import ManageLoans from '@/Components/FarmerManagementSystem/ManageLoans/ManageLoans.vue';
   import DisburseLoan from '@/Components/FarmerManagementSystem/DisburseLoan/DisburseLoan.vue';
   import AddLoan from '@/Components/FarmerManagementSystem/AddLoan/AddLoan.vue';
   import PannelLayout from '@/Layouts/PannelLayout.vue';
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
+import LoanCount from '@/Components/FarmerManagementSystem/LoanCount/loanCount.vue';
   
   const farmers = ref([]);
   const loans = ref([]);

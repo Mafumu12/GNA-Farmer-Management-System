@@ -1,20 +1,30 @@
 <template>
   <PannelLayout>
-    <h1>Overview</h1>
 
 
-    <h1>Overview</h1>
-    <div class="my-4">
-      <FarmerCount :farmers="farmers" />
+    <div>
+
+
+
+      <div class=" lg:flex lg:items-center  lg:justify-center lg:gap-4">
+
+
+        <div class="my-4">
+          <FarmerCount :farmers="farmers" />
+        </div>
+
+
+        <div class="my-4">
+          <AddFarmers @register="showRegisterModal = true" />
+        </div>
+      </div>
+
+      <div class="my-4 lg:w-[1110px] lg:mx-auto">
+        <RegisteredFarmers :farmers="farmers" @edit="openEditModal" @delete-farmer="deleteFarmer" />
+      </div>
+
     </div>
 
-
-    <div class="my-4">
-      <AddFarmers @register="showRegisterModal = true" />
-    </div>
-    <div class="my-4">
-      <RegisteredFarmers :farmers="farmers" @edit="openEditModal" @delete-farmer="deleteFarmer" />
-    </div>
     <RegisterModal v-if="showRegisterModal" :isVisible="showRegisterModal" @close="showRegisterModal = false"
       @farmer-register="fetchFarmers" />
     <EditFarmers v-if="showEditModal" :isVisible="showEditModal" :farmer="selectedFarmer" @close="closeEditModal"
