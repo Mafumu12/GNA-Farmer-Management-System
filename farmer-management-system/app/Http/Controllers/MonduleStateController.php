@@ -79,16 +79,7 @@ class MonduleStateController extends Controller
                 return response()->json(['error' => 'Module files not found'], 404);
             }
 
-            // Optionally clean related database tables
-            if ($request->input('clean_db', false)) {
-                try {
-                    // Implement logic to clean related tables, if needed
-                    // Example: DB::table('some_related_table')->where('module_id', $module->id)->delete();
-                } catch (\Exception $e) {
-                    Log::error("Error cleaning related tables for module: $moduleName - " . $e->getMessage());
-                    return response()->json(['error' => 'Failed to clean related database entries'], 500);
-                }
-            }
+         
 
             // Remove the module from the database
             $module->delete();

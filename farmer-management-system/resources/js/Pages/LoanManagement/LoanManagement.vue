@@ -20,6 +20,7 @@
           @approve="approveLoan"
           @reject="rejectLoan"
           @repaid="markAsRepaid"
+          @individual="fetchIndividual"
         />
       </div>
   
@@ -30,12 +31,18 @@
         :farmers="farmers"
         @loan-register="fetchData"  
       />
+
+      <IndividualModal
+      :isVisible="showIndividualModal"
+      :individual="individual"
+      @close="showIndividualModal = false"
+    />
     </PannelLayout>
   </template>
   
   <script setup>
 
-   
+  import IndividualModal from '@/Components/FarmerManagementSystem/IndividualLoan/IndividualModal.vue'; 
   import ManageLoans from '@/Components/FarmerManagementSystem/ManageLoans/ManageLoans.vue';
   import DisburseLoan from '@/Components/FarmerManagementSystem/DisburseLoan/DisburseLoan.vue';
   import AddLoan from '@/Components/FarmerManagementSystem/AddLoan/AddLoan.vue';
@@ -46,9 +53,12 @@ import LoanCount from '@/Components/FarmerManagementSystem/LoanCount/loanCount.v
   
   const farmers = ref([]);
   const loans = ref([]);
+  const individual = ref([]);
   const errorMessage = ref('');
   const showDisburseModal = ref(false);
-  
+  const showIndividualModal = ref(false);
+
+
   const fetchData = async () => {
     try {
       const response = await axios.get('/LoanManagement');
@@ -58,7 +68,16 @@ import LoanCount from '@/Components/FarmerManagementSystem/LoanCount/loanCount.v
       errorMessage.value = 'Failed to load data. Please try again later.';
     }
   };
-  
+ const fetchIndividual = async (loanId) => {
+  try {
+    const response = await axios.get(`/loans/${loanId}`);
+    individual.value = response.data;
+    showIndividualModal.value = true; // Open the modal with loan data
+  } catch (error) {
+    console.error('Failed to load individual loan data', error);
+  }
+}
+
   const updateLoanStatus = (loanId, status) => {
     const loan = loans.value.find((loan) => loan.id === loanId);
     if (loan) loan.status = status;

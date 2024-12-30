@@ -37,7 +37,7 @@
                 Mark as Repaid
               </button>
 
-              <button class="font-medium text-blue-600 hover:underline">
+              <button class="font-medium text-blue-600 hover:underline"@click="$emit('individual', loan.id)">
                 view
               </button>
             </td>
@@ -53,5 +53,5 @@ defineProps({
   loans: Array,
 });
 
-defineEmits(['approve', 'reject', 'repaid']);
+defineEmits(['approve', 'reject', 'repaid','individual']);
 </script>
