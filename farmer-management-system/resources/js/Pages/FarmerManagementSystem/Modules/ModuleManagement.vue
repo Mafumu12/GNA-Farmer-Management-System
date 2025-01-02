@@ -1,7 +1,7 @@
 <template>
     <PannelLayout>
 
-        <h1 class="text-2xl font-bold my-6 text-center"> Create Modules</h1>
+        <h1 class="text-2xl font-bold mt-12 mb-2 text-center"> Create Modules</h1>
 
         <div class="lg:flex lg:items-center lg:justify-center lg:gap-4">
 

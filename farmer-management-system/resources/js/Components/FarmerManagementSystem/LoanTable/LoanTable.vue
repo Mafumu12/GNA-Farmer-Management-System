@@ -1,6 +1,6 @@
 <template>
     <div class="shadow-md bg-white py-4 px-4 mx-auto">
-      <p class="text-lg font-bold my-2 text-center">Manage Loans</p>
+      <p class="text-lg font-bold my-2 text-center">Loans</p>
   
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -26,9 +26,9 @@
               >
                 {{ loan.farmer.first_name }} {{ loan.farmer.last_name }}
               </th>
-              <td class="px-6 py-4">{{ loan.loan_amount }}</td>
+              <td class="px-6 py-4">K {{ loan.loan_amount }}</td>
               <td class="px-6 py-4">{{ loan.interest_rate }} %</td>
-              <td class="px-6 py-4">{{ loan.repayment_duration }}</td>
+              <td class="px-6 py-4">{{ loan.repayment_duration }} months</td>
               <td class="px-6 py-4">{{ loan.status }}</td>
                
             </tr>

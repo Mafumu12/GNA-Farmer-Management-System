@@ -19,9 +19,9 @@
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
               {{ loan.farmer.first_name }} {{ loan.farmer.last_name }}
             </th>
-            <td class="px-6 py-4">{{ loan.loan_amount }}</td>
+            <td class="px-6 py-4">K {{ loan.loan_amount }}</td>
             <td class="px-6 py-4">{{ loan.interest_rate }} %</td>
-            <td class="px-6 py-4">{{ loan.repayment_duration }}</td>
+            <td class="px-6 py-4">{{ loan.repayment_duration }} months</td>
             <td class="px-6 py-4">{{ loan.status }}</td>
             <td class="px-6 py-4 flex items-center gap-2">
               <button v-if="loan.status === 'pending'" @click="$emit('approve', loan.id)"
@@ -37,7 +37,7 @@
                 Mark as Repaid
               </button>
 
-              <button class="font-medium text-blue-600 hover:underline"@click="$emit('individual', loan.id)">
+              <button class="font-medium text-gray-900 hover:underline"@click="$emit('individual', loan.id)">
                 view
               </button>
             </td>

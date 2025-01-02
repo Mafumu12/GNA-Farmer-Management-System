@@ -1,33 +1,28 @@
 <?php
-
+// Migration for LoanManagement module
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class BuildLoansTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
-        Schema::create('loans', function (Blueprint $table) {
+        Schema::connection('loan_management')->create('loans', function (Blueprint $table) {
             $table->id();
             $table->decimal('loan_amount', 15, 2);  // Loan amount
             $table->decimal('interest_rate', 5, 2); // Interest rate
             $table->integer('repayment_duration');   // Repayment duration (in months or years)
             $table->enum('status', ['pending', 'approved', 'rejected', 'repaid'])->default('pending'); // Include 'repaid'
-            $table->foreignId('farmer_id')->constrained('farmers')->onDelete('cascade'); // foreign key to farmers table with cascade on delete
+            $table->unsignedBigInteger('farmer_id'); // Explicitly define the farmer_id column type
+ 
+            $table->foreign('farmer_id')->references('id')->on('farmer_management_system.farmers');
             $table->timestamps(); // Created at and updated at timestamps
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('loans');
+        Schema::connection('loan_management')->dropIfExists('loans');
     }
-};
-
+}

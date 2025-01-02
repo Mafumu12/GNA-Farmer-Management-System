@@ -1,5 +1,5 @@
 <template>
-    <div class="shadow-md bg-white py-4 px-4 mx-auto lg:w-[550px] lg:h-[150px]">
+    <div class="shadow-md bg-white py-4 px-4 mx-auto lg:w-[550px] lg:h-[150px]  ">
 
         <p class="text-lg font-bold  my-2 lg:my-4 text-center"> Register Farmer</p>
 

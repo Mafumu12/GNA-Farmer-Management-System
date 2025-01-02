@@ -2,7 +2,7 @@
     <PannelLayout>
   
 
-      <div class=" lg:flex lg:items-center  lg:justify-center lg:gap-4">
+      <div class="mt-10 lg:flex lg:items-center  lg:justify-center lg:gap-4">
         <div class="my-4">
         <LoanCount  :loans="loans" />
       </div>

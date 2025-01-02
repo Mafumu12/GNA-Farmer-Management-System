@@ -9,3 +9,4 @@ Route::put('{id}/approve', [LoanManagementController::class, 'approveLoan']); //
 Route::put('{id}/reject', [LoanManagementController::class, 'rejectLoan']); // Reject a loan
 Route::put('{id}/repaid', [LoanManagementController::class, 'markAsRepaid']); // Mark a loan as repaid
 Route::get('/loans/{id}', [LoanManagementController::class, 'show']);
+Route::get('/loan-reports', [LoanManagementController::class, 'loanReports']);

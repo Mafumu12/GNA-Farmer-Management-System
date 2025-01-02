@@ -9,6 +9,7 @@ class Module extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql'; 
     // Specify the table name (if it differs from the default, which is 'modules')
     protected $table = 'modules';
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Farmer extends Model
 {
     use HasFactory;
+    protected $connection = 'mysql'; 
     protected $fillable = [
         'first_name',
         'last_name',

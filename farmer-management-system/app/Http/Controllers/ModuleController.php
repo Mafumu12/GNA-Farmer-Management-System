@@ -92,4 +92,15 @@ class ModuleController extends Controller
 
 
     }
+
+    public function getActiveModules()
+    {
+        try {
+            $activeModules = Module::where('is_active', true)->get(['id', 'name','is_active']);
+            return response()->json($activeModules);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch active modules.'], 500);
+        }
+    }
+
 }

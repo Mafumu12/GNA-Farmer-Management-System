@@ -43,6 +43,8 @@ Route::post('/upload-zip', [ModuleController::class, 'upload'])->name('module.up
 Route::post('/create-Module', [CreateModuleController::class, 'create'])->name('module.create');
 Route::post('/module/{moduleName}/toggle', [MonduleStateController::class, 'toggleActivation']);
 Route::delete('/module/{moduleName}', [MonduleStateController::class, 'deleteModule']);
+Route::get('/module-management/active', [ModuleController::class, 'getActiveModules']);
+
 
 
 

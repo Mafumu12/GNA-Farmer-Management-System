@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Farmer;
+use Modules\LoanManagement\Models\Loan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -15,29 +16,49 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class FarmersController extends Controller
 {
     public function index(Request $request)
-    {
-        try {
-          
-            $farmers = Farmer::all();
-    
-            if ($request->wantsJson()) {
-                 
-                return response()->json($farmers);
-            }
-    
-         
-            return Inertia::render('FarmerManagementSystem/Dashboard/Overview', [
-                'farmers' => $farmers,
-            ]);
-            
-        } catch (\Exception $e) {
-            
-            Log::error("Error fetching farmers: " . $e->getMessage());
-    
-            
-            return response()->json(['message' => 'An error occurred while fetching farmers. Please try again later.'], 500);
+{
+    try {
+        // Fetch all farmers
+        $farmers = Farmer::all();
+        $moduleExists = class_exists(Loan::class);
+
+        // Check if the Loan class exists before trying to use it
+       
+
+
+        if($moduleExists) {
+            $loans = Loan::with('farmer')->get();
+        }else
+        {
+            $loans = [];
         }
+
+        // Handle JSON API requests
+        if ($request->wantsJson()) {
+            return response()->json([
+                'farmers' => $farmers,
+                'loans' => $loans,
+                'moduleExists'=>$moduleExists
+            ]);
+        }
+
+        // Render Inertia view with the fetched data
+        return Inertia::render('FarmerManagementSystem/Dashboard/Overview', [
+            'farmers' => $farmers,
+            'loans' => $loans,
+        ]);
+    } catch (\Exception $e) {
+        // Log the error for debugging purposes
+        Log::error("Error fetching farmers or loans: " . $e->getMessage());
+
+        // Handle the exception gracefully
+        return Inertia::render('FarmerManagementSystem/Dashboard/Overview', [
+            'farmers' => $farmers, // Ensure farmers are still displayed
+            'loans' => [],         // Default to an empty array for loans
+        ])->with(['error' => 'An error occurred while fetching data.']);
     }
+}
+
     
 
 

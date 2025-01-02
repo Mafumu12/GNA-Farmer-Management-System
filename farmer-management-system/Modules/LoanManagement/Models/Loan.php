@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Farmer;  // Import Farmer model from the main project
 
-class Loans extends Model
+class Loan extends Model
 {
     use HasFactory;
-
+    
+    protected $connection = 'loan_management'; // Specify the custom database connection
     protected $fillable = [
         'loan_amount',
         'interest_rate',

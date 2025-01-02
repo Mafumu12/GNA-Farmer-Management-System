@@ -6,19 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Farmer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Modules\LoanManagement\Models\Loans;
+use Modules\LoanManagement\Models\Loan;
 use Exception;
 class LoanManagementController extends Controller
 {
-    public function index()
-    {
-        try {
-            return Inertia::render('LoanManagement/LoanManagement.vue');
-        } catch (Exception $e) {
-            return response()->json(['error' => 'An error occurred while loading the page.', 'details' => $e->getMessage()], 500);
-        }
-    }
-
+     
     public function createLoan(Request $request)
     {
         try {
@@ -29,7 +21,7 @@ class LoanManagementController extends Controller
                 'farmer_id' => 'required|exists:farmers,id',
             ]);
 
-            $loan = Loans::create([
+            $loan = Loan::create([
                 'loan_amount' => $validated['loan_amount'],
                 'interest_rate' => $validated['interest_rate'],
                 'repayment_duration' => $validated['repayment_duration'],
@@ -46,29 +38,52 @@ class LoanManagementController extends Controller
     public function displayLoans(Request $request)
     {
         try {
+            $loans = Loan::with('farmer')->get(); // Load loans with farmer details
+
+            $farmers = Farmer::all();
+    
             if ($request->wantsJson()) {
                 // Return JSON if the request is an API call
                 return response()->json([
-                    'loans' => Loans::with('farmer')->get(),
-                    'farmers' => Farmer::all(),
+                    'loans' => $loans,
+                    'farmers' => $farmers
                 ]);
             }
-
+    
             // Return the Inertia view for web navigation
             return Inertia::render('LoanManagement/LoanManagement', [
-                'loans' => Loans::with('farmer')->get(),
-                'farmers' => Farmer::all(),
-            ]);
+                'loans' => $loans,
+                'farmers' => $farmers
 
+            ]);
+    
         } catch (Exception $e) {
             return response()->json(['error' => 'An error occurred while retrieving loans.', 'details' => $e->getMessage()], 500);
         }
+    }
+    
+
+
+    public function loanReports()
+    {
+
+        try { 
+
+
+         $loans = Loan::with('farmer')->get();
+
+         return Inertia::render('LoanManagement/Reports',['loans'=>$loans]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'An error occurred while retrieving loans.', 'details' => $e->getMessage()], 500);
+        }
+
+
     }
 
     public function approveLoan($id)
     {
         try {
-            $loan = Loans::findOrFail($id);
+            $loan = Loan::findOrFail($id);
             $loan->status = 'approved';
             $loan->save();
 
@@ -82,7 +97,7 @@ class LoanManagementController extends Controller
     public function rejectLoan($id)
     {
         try {
-            $loan = Loans::findOrFail($id);
+            $loan = Loan::findOrFail($id);
             $loan->status = 'rejected';
             $loan->save();
 
@@ -95,7 +110,7 @@ class LoanManagementController extends Controller
     public function markAsRepaid($id)
     {
         try {
-            $loan = Loans::findOrFail($id);
+            $loan = Loan::findOrFail($id);
 
             // Ensure that only approved loans can be marked as repaid
             if ($loan->status !== 'approved') {
@@ -114,7 +129,7 @@ class LoanManagementController extends Controller
     public function show($id)
     {
         try {
-            $loan = Loans::findOrFail($id);
+            $loan = Loan::findOrFail($id);
             return response()->json($loan);
         } catch (Exception $e) {
             return response()->json(['error' => 'An error occurred while retrieving the loan details.', 'details' => $e->getMessage()], 500);

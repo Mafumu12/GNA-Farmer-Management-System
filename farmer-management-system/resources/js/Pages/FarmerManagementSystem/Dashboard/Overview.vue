@@ -6,7 +6,7 @@
 
 
 
-      <div class=" lg:flex lg:items-center  lg:justify-center lg:gap-4">
+      <div class=" mt-10 lg:flex lg:items-center  lg:justify-center lg:gap-4">
 
 
         <div class="my-4">
@@ -22,7 +22,10 @@
       <div class="my-4 lg:w-[1110px] lg:mx-auto">
         <RegisteredFarmers :farmers="farmers" @edit="openEditModal" @delete-farmer="deleteFarmer" />
       </div>
-
+      <div class="my-8 lg:w-[1110px] lg:mx-auto">
+        <LoanTable :loans="loans" />
+      </div>
+      
     </div>
 
     <RegisterModal v-if="showRegisterModal" :isVisible="showRegisterModal" @close="showRegisterModal = false"
@@ -36,6 +39,7 @@
 </template>
 
 <script setup>
+import LoanTable from '@/Components/FarmerManagementSystem/LoanTable/LoanTable.vue';
 import EditFarmers from '@/Components/FarmerManagementSystem/EditFarmers/EditFarmers.vue';
 import RegisteredFarmers from '@/Components/FarmerManagementSystem/RegisteredFarmers/RegisteredFarmers.vue';
 import AddFarmers from '@/Components/FarmerManagementSystem/AddFarmers/AddFarmers.vue';
@@ -46,6 +50,10 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const farmers = ref([]);
+const props = defineProps({loans: {
+    type: Array,
+    default: () => [], // Default to an empty array if loans are not provided
+  },});
 const errorMessage = ref('');
 const showRegisterModal = ref(false);
 const showEditModal = ref(false);
@@ -55,7 +63,8 @@ const selectedFarmer = ref(null);
 const fetchFarmers = async () => {
   try {
     const response = await axios.get('/');
-    farmers.value = response.data;
+    farmers.value = response.data.farmers;
+     
   } catch (error) {
     errorMessage.value = 'Failed to load farmers. Please try again later.';
   }
